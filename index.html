@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalor Quest - Petualangan Seru!</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+/* Kalor Quest - Kids Game UI (Sunny Theme) */
+:root {
+    --navy: #0f2563;
+    --cream: #fffbe9;
+    --blue: #1a7bff;
+    --blue-dark: #0b57c9;
+    --c-konsep: #a8eba5;
+    --c-eksperimen: #9fdcff;
+    --c-hitungan: #ffc58a;
+    --c-kolaborasi: #ffb3ad;
+    --c-corner: #d9c2ff;
+    --c-start: #ffe44d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Fredoka', sans-serif;
+    color: var(--navy);
+    background: #8fd8f7;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- Background ---------- */
+.bg-scene {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #9bdcf7 url('assets/bg-kids.jpg') center bottom / cover no-repeat;
+}
+
+/* ---------- Animations ---------- */
+@keyframes bounceSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.animate-bounce-slow { animation: bounceSlow 3s infinite ease-in-out; }
+
+@keyframes pulseSlow { from { transform: scale(1); } to { transform: scale(1.03); } }
+.animate-pulse-slow { animation: pulseSlow 2s infinite alternate; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+
+/* ---------- Shared buttons ---------- */
+.round-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 3px solid var(--navy);
+    box-shadow: 0 3px 0 var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+}
+.round-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--navy); }
+.round-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--navy); }
+
+.sound-btn {
+    position: fixed;
+    top: 14px;
+    right: 18px;
+    z-index: 60;
+}
+
+.btn-primary {
+    background: var(--blue);
+    color: #fff;
+    font-family: inherit;
+    font-weight: 600;
+    border: 3px solid var(--navy);
+    border-radius: 14px;
+    box-shadow: 0 5px 0 var(--navy);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform .15s, box-shadow .15s, background .15s;
+}
+.btn-primary:hover { background: #3a8fff; transform: translateY(-2px); box-shadow: 0 7px 0 var(--navy); }
+.btn-primary:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--navy); }
+.btn-danger { background: #ef4444; }
+.btn-danger:hover { background: #f25c5c; }
+.btn-success { background: #22c55e; }
+.btn-success:hover { background: #38d46e; }
+
+/* ---------- Setup screen ---------- */
+.setup-screen {
+    position: relative;
+    z-index: 20;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    transition: opacity .5s;
+}
+.setup-screen.opacity-0 { opacity: 0; }
+
+.title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.title-deco { font-size: clamp(34px, 6vw, 64px); filter: drop-shadow(0 4px 4px rgba(0,0,0,.2)); }
+.title-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: .9;
+}
+.title-kalor,
+.title-quest {
+    font-weight: 700;
+    letter-spacing: 2px;
+    paint-order: stroke fill;
+}
+.title-text .title-kalor {
+    font-size: clamp(54px, 10vw, 104px);
+    color: #ffd22e;
+    -webkit-text-stroke: 10px #f26a00;
+    text-shadow: 0 6px 0 #b34700;
+}
+.title-text .title-quest {
+    font-size: clamp(40px, 7.5vw, 76px);
+    color: #ef3b2d;
+    -webkit-text-stroke: 8px var(--navy);
+    text-shadow: 0 5px 0 #3b0d0d;
+    margin-top: -4px;
+}
+
+.subtitle-pill {
+    background: #ffd22e;
+    border: 4px solid var(--navy);
+    box-shadow: 0 4px 0 var(--navy);
+    border-radius: 999px;
+    padding: 6px 28px;
+    font-weight: 700;
+    font-size: clamp(14px, 1.7vw, 18px);
+    color: var(--navy);
+    text-align: center;
+}
+
+.setup-card {
+    background: var(--cream);
+    border: 5px solid var(--navy);
+    border-radius: 22px;
+    box-shadow: 0 6px 0 var(--navy);
+    width: min(92vw, 520px);
+    padding: 22px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.setup-head { text-align: center; }
+.setup-head h2 {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.setup-head-icon { color: var(--blue); }
+.setup-head p { margin: 2px 0 0; font-size: 12px; color: #55627f; font-weight: 400; }
+
+.group-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.group-select-btn {
+    flex: 1;
+    padding: 14px 0 12px;
+    border-radius: 14px;
+    background: #aef2fb;
+    border: 3px solid transparent;
+    box-shadow: 0 5px 0 #86d6df;
+    color: var(--navy);
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s, background .15s;
+}
+.group-select-btn:hover { transform: translateY(-2px); }
+.group-select-btn .num { font-size: 32px; font-weight: 700; line-height: 1; }
+.group-select-btn .lbl { font-size: 12px; margin-top: 4px; }
+.group-select-btn.is-selected {
+    background: #b9e3ff;
+    border-color: var(--blue);
+    box-shadow: 0 2px 0 var(--blue);
+    transform: translateY(3px);
+}
+
+.btn-start {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 19px;
+    border-radius: 14px;
+    border-color: #0a2d7a;
+    box-shadow: 0 5px 0 #0a2d7a;
+}
+
+.help-link {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.help-icon {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--navy);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    text-decoration: none;
+}
+.help-card { gap: 14px; }
+.help-title { margin: 0; text-align: center; font-size: 24px; font-weight: 700; }
+.help-list { margin: 0; padding-left: 22px; font-size: 15px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px; }
+
+/* ---------- Game layout ---------- */
+.game-ui {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 84px 0 24px;
+    height: 84px;
+    flex-shrink: 0;
+    animation: slideDown .6s cubic-bezier(.34,1.3,.64,1) both;
+}
+.hud-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 27px;
+    min-width: 200px;
+}
+.hud-logo .title-kalor { color: #ffd22e; -webkit-text-stroke: 5px #f26a00; text-shadow: 0 2px 0 #b34700; letter-spacing: 1px; }
+.hud-logo .title-quest { color: #ef3b2d; -webkit-text-stroke: 5px var(--navy); text-shadow: 0 2px 0 #3b0d0d; letter-spacing: 1px; }
+.hud-logo-flame { font-size: 27px; animation: flameFlicker 1.2s ease-in-out infinite; transform-origin: bottom center; }
+
+.hud-pill {
+    background: var(--cream);
+    border: 3px solid var(--navy);
+    border-radius: 16px;
+    box-shadow: 0 4px 0 var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    padding: 8px 18px;
+    width: min(42vw, 400px);
+}
+.hud-pill-left { display: flex; align-items: center; gap: 12px; }
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--navy);
+    background: #e9d5ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+.hud-pill-text { display: flex; flex-direction: column; line-height: 1; }
+.hud-pill-label { font-size: 11px; font-weight: 600; color: #6b7794; letter-spacing: .5px; }
+.hud-pill-name { font-size: 21px; font-weight: 700; margin-top: 3px; }
+.hud-pill-right { flex: 1; min-width: 90px; display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+.hud-progress-count { font-size: 15px; font-weight: 700; }
+/* re-triggered from script.js when the turn changes */
+.turn-change { animation: turnPop .55s cubic-bezier(.34,1.56,.64,1); }
+.hud-progress-track {
+    width: 100%;
+    height: 6px;
+    background: #dbe3f3;
+    border-radius: 999px;
+    border: 1px solid rgba(15,37,99,.35);
+    overflow: hidden;
+}
+.hud-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--blue);
+    border-radius: 999px;
+    transition: width .3s;
+}
+
+.hud-actions { display: flex; gap: 12px; min-width: 44px; }
+
+.game-main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    padding: 6px 28px 22px;
+}
+
+.board-area {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- Board ---------- */
+.board-wrapper {
+    position: relative;
+    aspect-ratio: 10 / 7;
+    width: min(100%, calc((100vh - 124px) * 10 / 7));
+    container-type: inline-size;
+    padding: 1.7cqw;
+    border-radius: 3.2cqw;
+    background: linear-gradient(180deg, #fbbf24 0%, #e08a0b 100%);
+    border: 3px solid var(--navy);
+    box-shadow: 0 6px 0 #8a4a05, 0 10px 14px rgba(0,0,0,.25), inset 0 0 0 3px #fde68a;
+}
+
+.grid-board {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    gap: .6cqw;
+    padding: .6cqw;
+    background: var(--cream);
+    border: 2px solid var(--navy);
+    border-radius: 1.8cqw;
+}
+
+/* Base Tile Styling */
+.tile {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 1.1cqw;
+    border: 2px solid var(--navy);
+    box-shadow: 0 2px 0 rgba(15,37,99,.55);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .2cqw;
+    background-color: #fff;
+    transition: transform .15s;
+}
+.tile:hover { transform: translateY(1px); z-index: 10; }
+
+.tile-icon {
+    font-size: clamp(16px, 4cqw, 40px);
+    line-height: 1;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.2));
+    margin-top: .6cqw;
+}
+.tile-label {
+    font-size: clamp(8px, 1.55cqw, 16px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--navy);
+    text-align: center;
+    white-space: nowrap;
+}
+.tile-number {
+    position: absolute;
+    top: .35cqw;
+    left: .35cqw;
+    width: clamp(13px, 2.3cqw, 24px);
+    height: clamp(13px, 2.3cqw, 24px);
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid var(--navy);
+    color: var(--navy);
+    font-size: clamp(8px, 1.45cqw, 15px);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* Tile / legend colors */
+.t-konsep { background-color: var(--c-konsep); }
+.t-eksperimen { background-color: var(--c-eksperimen); }
+.t-hitungan { background-color: var(--c-hitungan); }
+.t-kolaborasi { background-color: var(--c-kolaborasi); }
+.t-corner { background-color: var(--c-corner); }
+.t-start { background-color: var(--c-start); }
+
+/* Active Tile Pulse */
+.tile.active {
+    box-shadow: 0 0 0 3px #fde047, 0 2px 0 rgba(15,37,99,.55);
+    animation: pulseBorder 1.5s infinite;
+    z-index: 5;
+}
+@keyframes pulseBorder {
+    0% { box-shadow: 0 0 0 2px rgba(250, 204, 21, 1), 0 2px 0 rgba(15,37,99,.55); }
+    50% { box-shadow: 0 0 0 6px rgba(250, 204, 21, .5), 0 2px 0 rgba(15,37,99,.55); }
+    100% { box-shadow: 0 0 0 2px rgba(250, 204, 21, 1), 0 2px 0 rgba(15,37,99,.55); }
+}
+
+/* ---------- Center panel ---------- */
+.center-panel {
+    grid-area: 2 / 2 / 7 / 10;
+    margin: .3cqw;
+    background: #fff9dc;
+    border: 2px dashed #f2a33a;
+    border-radius: 1.8cqw;
+    padding: 1cqw 1.2cqw 1.2cqw;
+    display: flex;
+    flex-direction: column;
+    gap: .8cqw;
+    min-height: 0;
+    min-width: 0;
+    z-index: 0;
+}
+.center-title { text-align: center; line-height: 1.15; }
+.center-title h2 {
+    margin: 0;
+    font-size: clamp(13px, 2.5cqw, 28px);
+    font-weight: 700;
+    color: var(--navy);
+}
+.center-title p {
+    margin: 0;
+    font-size: clamp(9px, 1.5cqw, 16px);
+    color: #55627f;
+}
+
+.center-area {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 1cqw;
+}
+.center-area[data-count="1"],
+.center-area[data-count="2"] { grid-template-columns: 1fr; }
+.center-area[data-count="3"] .house-plot:nth-child(3) { grid-column: 1 / -1; }
+
+/* 5-8 groups: compact plots */
+.center-area.dense { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: .8cqw; }
+.center-area[data-count="5"],
+.center-area[data-count="6"] { grid-template-columns: repeat(3, 1fr); }
+.center-area.dense .house-plot {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: .7cqw .6cqw;
+}
+.center-area.dense .plot-label {
+    position: static;
+    font-size: clamp(9px, 1.5cqw, 16px);
+    margin-bottom: .5cqw;
+}
+.center-area.dense .plot-avatar { width: clamp(16px, 2.4cqw, 26px); height: clamp(16px, 2.4cqw, 26px); }
+.center-area.dense .badges-container { grid-template-columns: repeat(4, auto); justify-content: center; }
+.center-area.dense .badge { font-size: clamp(11px, 2cqw, 22px); }
+
+/* House plot */
+.house-plot {
+    --p: 0;
+    position: relative;
+    min-height: 0;
+    background: #fff;
+    border: 2px solid var(--navy);
+    border-radius: 1.2cqw;
+    display: flex;
+    justify-content: flex-end;
+    padding: .9cqw 1.1cqw;
+    overflow: hidden;
+}
+/* House silhouette that "fills in" as components are earned */
+.house-plot::before {
+    content: '🏠';
+    position: absolute;
+    bottom: .6cqw;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(16px, 4.2cqw, 44px);
+    line-height: 1;
+    filter: grayscale(calc(1 - var(--p) / 7));
+    opacity: calc(.22 + var(--p) * .11);
+    transition: opacity .5s, filter .5s;
+}
+
+.plot-label {
+    position: absolute;
+    top: .7cqw;
+    left: .9cqw;
+    font-size: clamp(10px, 1.8cqw, 19px);
+    font-weight: 700;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: .6cqw;
+    z-index: 1;
+}
+.plot-avatar {
+    --pc: #fff;
+    width: clamp(18px, 2.9cqw, 30px);
+    height: clamp(18px, 2.9cqw, 30px);
+    border-radius: 50%;
+    background: var(--pc);
+    border: 2px solid var(--navy);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(11px, 1.8cqw, 19px);
+    line-height: 1;
+}
+.house-plot.is-turn {
+    border-color: #f5b301;
+    box-shadow: 0 0 0 3px rgba(255, 210, 46, .8);
+    animation: plotGlow 1.4s ease-in-out infinite;
+}
+
+/* Component stars: outline until earned */
+.badges-container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-auto-rows: auto;
+    gap: .2cqw .6cqw;
+    align-content: start;
+    justify-content: end;
+}
+.badge {
+    font-size: clamp(12px, 2.4cqw, 26px);
+    line-height: 1;
+    color: var(--navy);
+    transition: color .3s;
+}
+.badge::before { content: '☆'; }
+.badge.earned {
+    color: #f5b301;
+    text-shadow: 0 1px 0 var(--navy);
+    animation: popIn .6s cubic-bezier(.34,1.56,.64,1);
+}
+.badge.earned::before { content: '★'; }
+@keyframes popIn {
+    0% { transform: scale(0) }
+    50% { transform: scale(1.5) }
+    100% { transform: scale(1) }
+}
+
+/* ---------- Pawns ---------- */
+.pawns-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+}
+.pawn-wrapper {
+    --pc: #fff;
+    position: absolute;
+    width: calc(clamp(28px, 5cqw, 52px) * var(--ps, 1));
+    height: calc(clamp(28px, 5cqw, 52px) * var(--ps, 1));
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background: var(--pc);
+    box-shadow: 0 0 0 2.5px var(--navy), 0 5px 0 2.5px rgba(15,37,99,.55);
+    transition: top 0.5s cubic-bezier(0.25, 1, 0.5, 1), left 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(16px, 3cqw, 32px);
+    line-height: 1;
+    animation: pawnBob 2s ease-in-out infinite;
+}
+.pawn-avatar { filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
+/* group number badge on the token */
+.pawn-num {
+    position: absolute;
+    right: -.9cqw;
+    bottom: -.9cqw;
+    width: clamp(14px, 2.3cqw, 24px);
+    height: clamp(14px, 2.3cqw, 24px);
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    border: 2px solid #fff;
+    font-size: clamp(9px, 1.5cqw, 16px);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* the token whose turn it is */
+.pawn-wrapper.is-turn {
+    z-index: 200;
+    animation: pawnTurn 1s ease-in-out infinite;
+}
+.pawn-wrapper.is-turn::before {
+    content: '';
+    position: absolute;
+    inset: -.9cqw;
+    border-radius: 50%;
+    border: 3px solid #ffd22e;
+    animation: ringPulse 1.3s ease-out infinite;
+}
+.pawn-wrapper.is-turn::after {
+    content: '▼';
+    position: absolute;
+    left: 50%;
+    top: -2.6cqw;
+    transform: translateX(-50%);
+    font-size: clamp(12px, 2.2cqw, 24px);
+    color: #ffd22e;
+    -webkit-text-stroke: 1.5px var(--navy);
+    paint-order: stroke fill;
+    animation: arrowBounce .8s ease-in-out infinite;
+}
+
+@keyframes hop {
+    0%, 100% { margin-top: 0; }
+    50% { margin-top: -18px; }
+}
+.pawn-wrapper.moving { animation: hop .5s ease; }
+.pawn-wrapper.moving::before,
+.pawn-wrapper.moving::after { display: none; }
+
+@keyframes pawnBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+@keyframes pawnTurn {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-5px) scale(1.08); }
+}
+@keyframes ringPulse {
+    0% { transform: scale(.85); opacity: 1; }
+    100% { transform: scale(1.35); opacity: 0; }
+}
+@keyframes arrowBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+    width: clamp(210px, 22vw, 270px);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: center;
+}
+.side-card {
+    background: var(--cream);
+    border: 3px solid var(--navy);
+    border-radius: 16px;
+    box-shadow: 0 4px 0 var(--navy);
+    padding: 12px 14px;
+}
+.dice-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.dice-owner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 18px;
+}
+.dice-owner #sidebar-avatar { font-size: 24px; }
+
+.dice-visual {
+    width: 88px;
+    height: 88px;
+    background: #fff;
+    border: 3px solid var(--navy);
+    border-radius: 18px;
+    box-shadow: 0 5px 0 var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 700;
+    animation: diceIdle 2.4s ease-in-out infinite;
+}
+.dice-visual.dice-rolling { animation: rollDice .4s linear infinite; }
+.die-face {
+    width: 100%;
+    height: 100%;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    place-items: center;
+}
+.pip { width: 14px; height: 14px; border-radius: 50%; background: transparent; }
+.pip.on { background: var(--navy); animation: pipPop .35s ease-out; }
+
+.btn-roll {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 20px;
+    border-radius: 14px;
+    animation: rollPulse 1.8s ease-in-out infinite;
+}
+.btn-roll:hover { animation-play-state: paused; }
+
+.legend-card h3 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+}
+.legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.legend-chip {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 6px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--navy);
+    white-space: nowrap;
+}
+
+/* Dice Rolling */
+@keyframes rollDice {
+    0% { transform: rotate(0) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+.dice-rolling { animation: rollDice .4s linear infinite; }
+
+/* Modal Helpers */
+.modal-show { opacity: 1 !important; }
+.modal-content-show { opacity: 1 !important; transform: scale(1) !important; }
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 820px) {
+    .game-main { flex-direction: column; gap: 10px; padding: 4px 12px 12px; }
+    .board-area { height: auto; flex: 0 1 auto; width: 100%; }
+    .board-wrapper { width: min(100%, calc((100vh - 270px) * 10 / 7)); }
+    .sidebar { width: 100%; flex-direction: row; }
+    .sidebar .side-card { flex: 1; }
+    .hud { padding-right: 70px; }
+    .hud-logo { display: none; }
+}
+
+/* ---------- Extra animations ---------- */
+@keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes boardIn { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+@keyframes cardPop { from { opacity: 0; transform: translateY(24px) scale(.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.board-wrapper { animation: boardIn .6s cubic-bezier(.34,1.3,.64,1) both; }
+.sidebar { animation: slideInRight .6s .15s cubic-bezier(.34,1.3,.64,1) both; }
+
+/* turn change */
+@keyframes turnPop {
+    0% { transform: scale(.6); opacity: .3; }
+    100% { transform: scale(1); opacity: 1; }
+}
+@keyframes plotGlow {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(255, 210, 46, .85); }
+    50% { box-shadow: 0 0 0 6px rgba(255, 210, 46, .35); }
+}
+
+/* dice / roll button */
+@keyframes diceIdle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+@keyframes pipPop { 0% { transform: scale(0); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+@keyframes rollPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+/* tile where a pawn just landed */
+@keyframes iconPop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.5) rotate(-8deg); }
+    100% { transform: scale(1); }
+}
+.tile.landed .tile-icon { animation: iconPop .6s ease; }
+
+/* title screen */
+@keyframes flameFlicker {
+    0%, 100% { transform: scale(1) rotate(-3deg); }
+    50% { transform: scale(1.12) rotate(3deg); }
+}
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.title-deco.flame { animation: flameFlicker 1.2s ease-in-out infinite; transform-origin: bottom center; }
+.title-deco.thermo { animation: floaty 2.4s ease-in-out infinite; }
+.title-text { animation: floaty 3s ease-in-out infinite; }
+.setup-card { animation: cardPop .6s .1s cubic-bezier(.34,1.3,.64,1) both; }
+.subtitle-pill { animation: cardPop .6s cubic-bezier(.34,1.3,.64,1) both; }
+.btn-start { animation: rollPulse 2s ease-in-out infinite; }
+.btn-start:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+    </style>
+</head>
+<body class="overflow-hidden antialiased font-['Fredoka']">
+
+    <!-- Background Illustration (Sunny meadow) -->
+    <div class="bg-scene" aria-hidden="true"></div>
+
+    <!-- Sound button (always visible, top right) -->
+    <button id="btn-sound" class="round-btn sound-btn" title="Suara" aria-label="Suara">🔊</button>
+
+    <!-- 1. SETUP SCREEN -->
+    <div id="setup-screen" class="setup-screen">
+        <!-- Title -->
+        <div class="title-wrap">
+            <span class="title-deco flame">🔥</span>
+            <div class="title-text">
+                <span class="title-kalor">KALOR</span>
+                <span class="title-quest">QUEST</span>
+            </div>
+            <span class="title-deco thermo">🌡️</span>
+        </div>
+        <div class="subtitle-pill">Petualangan Seru Membangun Rumah Impian!</div>
+
+        <!-- Setup Box -->
+        <div class="setup-card">
+            <div class="setup-head">
+                <h2><span class="setup-head-icon">👥</span> Pilih Jumlah Kelompok</h2>
+                <p>Siapa saja yang akan bertualang hari ini?</p>
+            </div>
+
+            <div class="group-options">
+                <button id="btn-grp-2" class="group-select-btn" onclick="selectGroupCount(2)">
+                    <div class="num">2</div>
+                    <div class="lbl">Kelompok</div>
+                </button>
+                <button id="btn-grp-3" class="group-select-btn" onclick="selectGroupCount(3)">
+                    <div class="num">3</div>
+                    <div class="lbl">Kelompok</div>
+                </button>
+                <button id="btn-grp-4" class="group-select-btn" onclick="selectGroupCount(4)">
+                    <div class="num">4</div>
+                    <div class="lbl">Kelompok</div>
+                </button>
+                <button id="btn-grp-5" class="group-select-btn" onclick="selectGroupCount(5)">
+                    <div class="num">5</div>
+                    <div class="lbl">Kelompok</div>
+                </button>
+                <button id="btn-grp-6" class="group-select-btn" onclick="selectGroupCount(6)">
+                    <div class="num">6</div>
+                    <div class="lbl">Kelompok</div>
+                </button>
+                <button id="btn-grp-7" class="group-select-btn" onclick="selectGroupCount(7)">
+                    <div class="num">7</div>
+                    <div class="lbl">Kelompok</div>
+                </button>
+                <button id="btn-grp-8" class="group-select-btn" onclick="selectGroupCount(8)">
+                    <div class="num">8</div>
+                    <div class="lbl">Kelompok</div>
+                </button>
+            </div>
+
+            <!-- Hidden value read by the game logic -->
+            <span id="group-count" class="hidden">2</span>
+
+            <button id="btn-start-game" class="btn-primary btn-start">
+                <span>✨</span> Mulai Petualangan!
+            </button>
+        </div>
+        <button id="btn-help" class="help-link">
+            <span class="help-icon">?</span> Cara Bermain
+        </button>
+    </div>
+
+    <!-- 2. MAIN GAME UI -->
+    <div id="game-ui" class="game-ui hidden">
+
+        <!-- Top Header -->
+        <header class="hud">
+            <!-- Logo -->
+            <div class="hud-logo">
+                <span class="hud-logo-flame">🔥</span>
+                <span><span class="title-kalor">KALOR</span> <span class="title-quest">QUEST</span></span>
+            </div>
+
+            <!-- Turn Indicator -->
+            <div class="hud-pill">
+                <div class="hud-pill-left">
+                    <div id="hud-avatar" class="avatar-circle">🧑‍🚀</div>
+                    <div class="hud-pill-text">
+                        <span class="hud-pill-label">GILIRAN</span>
+                        <span id="hud-turn-name" class="hud-pill-name">Kelompok 1</span>
+                    </div>
+                </div>
+                <div class="hud-pill-right">
+                    <div class="hud-progress-count">🏠 <span id="hud-components">0/7</span></div>
+                    <div class="hud-progress-track">
+                        <div id="hud-progress-bar" class="hud-progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reset -->
+            <div class="hud-actions">
+                <button onclick="window.location.reload()" class="round-btn" title="Mulai ulang" aria-label="Mulai ulang">↻</button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="game-main">
+            <!-- Left side: Board -->
+            <div class="board-area">
+                <div class="board-wrapper">
+                    <div id="board" class="grid-board">
+                        <!-- Tiles injected by JS -->
+
+                        <!-- Center Area for House Plots -->
+                        <div class="center-panel">
+                            <div class="center-title">
+                                <h2>🏠 BANGUN RUMAH IMPIAN!</h2>
+                                <p>Kumpulkan 7 komponen rumah</p>
+                            </div>
+                            <div id="center-area" class="center-area">
+                                <!-- House Plots injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Pawns sit on top of tiles (same coordinate space as the tiles) -->
+                    <div id="pawns-container" class="pawns-container"></div>
+                </div>
+            </div>
+
+            <!-- Right side: Sidebar Controls -->
+            <aside class="sidebar">
+                <!-- Dice Box -->
+                <div class="side-card dice-card">
+                    <div class="dice-owner">
+                        <span id="sidebar-avatar">🧑‍🚀</span>
+                        <span id="sidebar-turn-name">Kelompok 1</span>
+                    </div>
+
+                    <div id="dice-visual" class="dice-visual"></div>
+
+                    <button id="btn-roll" class="btn-primary btn-roll">
+                        <span>🎲</span> Lempar Dadu
+                    </button>
+                </div>
+
+                <!-- Legend Box -->
+                <div class="side-card legend-card">
+                    <h3>Jenis Tantangan</h3>
+                    <div class="legend-grid">
+                        <div class="legend-chip t-konsep"><span>💡</span> Konsep</div>
+                        <div class="legend-chip t-eksperimen"><span>🧪</span> Eksperimen</div>
+                        <div class="legend-chip t-hitungan"><span>🧮</span> Hitungan</div>
+                        <div class="legend-chip t-kolaborasi"><span>🤝</span> Kolaborasi</div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- 3. CHALLENGE MODAL -->
+    <div id="modal-challenge" class="hidden fixed inset-0 bg-[#00164e]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="w-full max-w-xl rounded-[2rem] border-[5px] border-[#00164e] shadow-[0_10px_0_#00164e] overflow-hidden bg-[#fffbe9] transform transition-transform scale-95 opacity-0 flex flex-col" id="modal-challenge-content">
+            <!-- Header -->
+            <div id="modal-header" class="p-5 text-center border-b-[4px] border-[#00164e] bg-white relative">
+                <div id="modal-type" class="uppercase tracking-widest font-bold text-[#00164e] text-xl flex items-center justify-center gap-2">
+                    <span>💡</span> KARTU KONSEP
+                </div>
+            </div>
+            <!-- Body -->
+            <div class="p-8 text-center flex-1 flex flex-col justify-center">
+                <h2 id="modal-question" class="text-2xl leading-tight mb-8 text-[#00164e] font-semibold">Pertanyaan muncul di sini?</h2>
+
+                <button id="btn-show-answer" class="btn-primary w-full py-4 text-xl">
+                    Lihat Jawaban
+                </button>
+
+                <div id="answer-area" class="hidden mt-6 animate-fade-in">
+                    <div class="bg-white text-[#00164e] p-6 rounded-2xl border-[3px] border-[#00164e]/20 mb-6 text-center shadow-inner">
+                        <div class="font-semibold text-gray-500 mb-2 text-xs uppercase tracking-wide">Jawaban Benar:</div>
+                        <p id="modal-answer" class="text-xl font-bold text-[#16a34a]">Jawaban muncul di sini</p>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button id="btn-fail" class="btn-primary btn-danger flex-1 py-4 text-lg">
+                            ✖️ Gagal
+                        </button>
+                        <button id="btn-success" class="btn-primary btn-success flex-1 py-4 text-lg">
+                            ✔️ Berhasil
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. WINNER MODAL -->
+    <div id="modal-winner" class="hidden fixed inset-0 bg-[#00164e]/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+        <div class="text-center relative z-10 animate-bounce-slow max-w-2xl bg-[#fffbe9] p-12 rounded-[3rem] border-[6px] border-[#00164e] shadow-[0_12px_0_#00164e]">
+            <h1 class="text-6xl text-[#ea580c] font-bold mb-4 flex justify-center gap-4">🎉 SELAMAT! 🎉</h1>
+            <h2 id="winner-name" class="text-4xl font-bold mb-8 text-[#00164e]">Kelompok X Menang!</h2>
+
+            <div class="w-48 h-48 mx-auto bg-[#fde68a] rounded-full border-[5px] border-[#00164e] flex items-center justify-center mb-10 shadow-[0_8px_0_#00164e]">
+                <span class="text-7xl">🏠</span>
+            </div>
+
+            <button onclick="window.location.reload()" class="btn-primary btn-success px-10 py-4 text-3xl">
+                MAIN LAGI
+            </button>
+        </div>
+        <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none"></canvas>
+    </div>
+
+    <!-- 5. HOW TO PLAY MODAL -->
+    <div id="modal-help" class="hidden fixed inset-0 bg-[#00164e]/60 backdrop-blur-sm z-[90] flex items-center justify-center p-4">
+        <div class="setup-card help-card">
+            <h2 class="help-title">❓ Cara Bermain</h2>
+            <ol class="help-list">
+                <li>Pilih jumlah kelompok, lalu mulai petualangan.</li>
+                <li>Kelompok yang mendapat giliran melempar dadu dan melangkah sesuai angka dadu.</li>
+                <li>Jawab tantangan di kotak yang dipijak. Jika <b>Berhasil</b>, kelompok mendapat 1 komponen rumah.</li>
+                <li>Kelompok pertama yang mengumpulkan <b>7 komponen rumah</b> menjadi pemenang!</li>
+            </ol>
+            <button id="btn-help-close" class="btn-primary btn-start">Mengerti!</button>
+        </div>
+    </div>
+
+    <!-- Group Selection Logic -->
+    <script>
+        // Setup Screen logic for selecting groups
+        function selectGroupCount(num) {
+            document.getElementById('group-count').innerText = num;
+            document.querySelectorAll('.group-select-btn').forEach(btn => btn.classList.remove('is-selected'));
+            document.getElementById(`btn-grp-${num}`).classList.add('is-selected');
+        }
+        // Initialize default
+        window.addEventListener('DOMContentLoaded', () => selectGroupCount(2));
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

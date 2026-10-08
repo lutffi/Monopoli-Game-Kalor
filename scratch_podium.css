@@ -1,0 +1,62 @@
+/* Podium Styles */
+.podium-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+    height: 300px;
+    margin-top: 30px;
+}
+
+.podium-step {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    color: white;
+    font-family: 'Fredoka One';
+    border-radius: 15px 15px 0 0;
+    box-shadow: inset 0 10px 20px rgba(255,255,255,0.3), 0 -5px 15px rgba(0,0,0,0.2);
+    position: relative;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.podium-step.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.podium-step .rank {
+    font-size: 4rem;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+}
+
+.podium-step .group-name {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+
+.podium-step .score {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    background: rgba(0,0,0,0.3);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.rank-1 { background: linear-gradient(#f1c40f, #f39c12); height: 100%; z-index: 3; transition-delay: 0.6s;}
+.rank-2 { background: linear-gradient(#bdc3c7, #95a5a6); height: 75%; z-index: 2; transition-delay: 0.3s;}
+.rank-3 { background: linear-gradient(#cd7f32, #a0522d); height: 50%; z-index: 1; transition-delay: 0s;}
+
+.podium-step.rank-1::after {
+    content: '👑';
+    position: absolute;
+    top: -50px;
+    font-size: 3rem;
+    animation: float 2s infinite ease-in-out;
+}
