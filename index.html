@@ -1015,7 +1015,7 @@ body {
 
     <!-- 3. CHALLENGE MODAL -->
     <div id="modal-challenge" class="hidden fixed inset-0 bg-[#00164e]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity duration-300">
-        <div class="w-full max-w-xl rounded-[2rem] border-[5px] border-[#00164e] shadow-[0_10px_0_#00164e] overflow-hidden bg-[#fffbe9] transform transition-transform scale-95 opacity-0 flex flex-col" id="modal-challenge-content">
+        <div class="w-full max-w-xl max-h-[90vh] rounded-[2rem] border-[5px] border-[#00164e] shadow-[0_10px_0_#00164e] overflow-hidden bg-[#fffbe9] transform transition-transform scale-95 opacity-0 flex flex-col" id="modal-challenge-content">
             <!-- Header -->
             <div id="modal-header" class="p-5 text-center border-b-[4px] border-[#00164e] bg-white relative">
                 <div id="modal-type" class="uppercase tracking-widest font-bold text-[#00164e] text-xl flex items-center justify-center gap-2">
@@ -1023,17 +1023,17 @@ body {
                 </div>
             </div>
             <!-- Body -->
-            <div class="p-8 text-center flex-1 flex flex-col justify-center">
-                <h2 id="modal-question" class="text-2xl leading-tight mb-8 text-[#00164e] font-semibold">Pertanyaan muncul di sini?</h2>
+            <div class="p-5 text-center flex-1 overflow-y-auto">
+                <div id="modal-question" class="text-left space-y-3"></div>
 
-                <button id="btn-show-answer" class="btn-primary w-full py-4 text-xl">
+                <button id="btn-show-answer" class="btn-primary w-full py-4 text-xl mt-5">
                     Lihat Jawaban
                 </button>
 
-                <div id="answer-area" class="hidden mt-6 animate-fade-in">
-                    <div class="bg-white text-[#00164e] p-6 rounded-2xl border-[3px] border-[#00164e]/20 mb-6 text-center shadow-inner">
-                        <div class="font-semibold text-gray-500 mb-2 text-xs uppercase tracking-wide">Jawaban Benar:</div>
-                        <p id="modal-answer" class="text-xl font-bold text-[#16a34a]">Jawaban muncul di sini</p>
+                <div id="answer-area" class="hidden mt-5 animate-fade-in">
+                    <div class="bg-white text-[#00164e] p-4 rounded-2xl border-[3px] border-[#00164e]/20 mb-5 text-left shadow-inner">
+                        <div class="font-semibold text-gray-500 mb-3 text-xs uppercase tracking-wide">Kunci Jawaban</div>
+                        <div id="modal-answer" class="space-y-3"></div>
                     </div>
 
                     <div class="flex gap-4">

@@ -1,36 +1,134 @@
 // State Management
 const questions = [
-    { id: 1, type: "start", text: "Garis Start", answer: "" },
-    { id: 2, type: "konsep", text: "Apa yang dimaksud dengan kalor?", answer: "Energi panas yang berpindah dari benda bersuhu tinggi ke benda bersuhu rendah." },
-    { id: 3, type: "konsep", text: "Sebutkan satuan kalor dalam Sistem Internasional (SI)!", answer: "Joule (J)" },
-    { id: 4, type: "eksperimen", text: "Sentuhlah sendok logam dan sendok kayu/plastik. Mana yang lebih cepat panas? Mengapa?", answer: "Sendok logam, karena logam konduktor panas yang baik." },
-    { id: 5, type: "konsep", text: "Sebutkan 3 cara perpindahan kalor!", answer: "Konduksi, Konveksi, dan Radiasi." },
-    { id: 6, type: "konsep", text: "Apa yang dimaksud dengan konduksi?", answer: "Perpindahan panas melalui zat perantara tanpa perpindahan partikel." },
-    { id: 7, type: "konsep", text: "Berikan contoh konduksi dalam kehidupan sehari-hari!", answer: "Ujung sendok logam terasa panas saat ujung lainnya dicelupkan ke teh panas." },
-    { id: 8, type: "corner", text: "Istirahat Sejenak", answer: "" },
-    { id: 9, type: "konsep", text: "Apa yang dimaksud dengan konveksi?", answer: "Perpindahan panas melalui aliran zat perantara yang disertai perpindahan partikel." },
-    { id: 10, type: "konsep", text: "Berikan contoh peristiwa konveksi!", answer: "Terjadinya angin darat dan laut, air mendidih." },
-    { id: 11, type: "konsep", text: "Apa yang dimaksud dengan radiasi?", answer: "Perpindahan panas tanpa memerlukan zat perantara." },
-    { id: 12, type: "konsep", text: "Apa yang dimaksud dengan kalor jenis zat?", answer: "Banyak kalor untuk menaikkan suhu 1 kg zat sebesar 1°C." },
-    { id: 13, type: "konsep", text: "Mengapa terjadi angin laut pada siang hari?", answer: "Karena daratan lebih cepat panas, udara di darat naik digantikan udara laut." },
-    { id: 14, type: "konsep", text: "Mengapa dinding dalam termos dilapisi perak?", answer: "Memantulkan radiasi panas kembali ke dalam." },
-    { id: 15, type: "corner", text: "Pos Pengamatan", answer: "" },
-    { id: 16, type: "konsep", text: "Warna pakaian apa yang baik dipakai saat terik?", answer: "Putih/cerah, karena memantulkan panas dengan baik." },
-    { id: 17, type: "hitungan", text: "Apa rumus untuk menghitung besar kalor (Q)?", answer: "Q = m × c × ΔT" },
-    { id: 18, type: "konsep", text: "Apa bunyi Asas Black?", answer: "Kalor yang dilepas benda suhu tinggi = kalor diserap benda suhu rendah." },
-    { id: 19, type: "konsep", text: "Sebutkan wujud zat yang berubah karena menyerap panas!", answer: "Mencair, Menguap, Menyublim." },
-    { id: 20, type: "konsep", text: "Apa yang dimaksud dengan menguap?", answer: "Perubahan cair menjadi gas." },
-    { id: 21, type: "konsep", text: "Apa yang dimaksud dengan mencair?", answer: "Perubahan padat menjadi cair." },
-    { id: 22, type: "corner", text: "Zona Aman", answer: "" },
-    { id: 23, type: "kolaborasi", text: "Sebutkan 1 benda di rumah yang memanfaatkan kalor!", answer: "Setrika, panci, oven, termos." },
-    { id: 24, type: "konsep", text: "Sebutkan bahan yang merupakan isolator panas!", answer: "Kayu, plastik, karet, kain." },
-    { id: 25, type: "konsep", text: "Mengapa gagang panci terbuat dari plastik?", answer: "Karena plastik adalah isolator panas." },
-    { id: 26, type: "konsep", text: "Apa fungsi ruang hampa udara pada termos?", answer: "Mencegah perpindahan kalor secara konduksi & konveksi." },
-    { id: 27, type: "hitungan", text: "Berapa titik didih & beku air murni?", answer: "Titik didih 100°C, titik beku 0°C." },
-    { id: 28, type: "hitungan", text: "Hitung Q memanaskan 1 kg air 20°C ke 50°C (c=4200)!", answer: "Q = 1 × 4200 × 30 = 126.000 Joule." },
-    { id: 29, type: "konsep", text: "Mengapa sambungan rel kereta dibuat renggang?", answer: "Agar tidak melengkung saat memuai." },
-    { id: 30, type: "konsep", text: "Apa yang dimaksud kalor laten?", answer: "Kalor untuk mengubah wujud zat tanpa mengubah suhunya." }
+    { id: 1, type: "start" },
+    { id: 2, type: "konsep" },
+    { id: 3, type: "konsep" },
+    { id: 4, type: "eksperimen" },
+    { id: 5, type: "konsep" },
+    { id: 6, type: "konsep" },
+    { id: 7, type: "konsep" },
+    { id: 8, type: "corner" },
+    { id: 9, type: "konsep" },
+    { id: 10, type: "konsep" },
+    { id: 11, type: "konsep" },
+    { id: 12, type: "konsep" },
+    { id: 13, type: "konsep" },
+    { id: 14, type: "konsep" },
+    { id: 15, type: "corner" },
+    { id: 16, type: "konsep" },
+    { id: 17, type: "hitungan" },
+    { id: 18, type: "konsep" },
+    { id: 19, type: "konsep" },
+    { id: 20, type: "konsep" },
+    { id: 21, type: "konsep" },
+    { id: 22, type: "corner" },
+    { id: 23, type: "kolaborasi" },
+    { id: 24, type: "konsep" },
+    { id: 25, type: "konsep" },
+    { id: 26, type: "konsep" },
+    { id: 27, type: "hitungan" },
+    { id: 28, type: "hitungan" },
+    { id: 29, type: "konsep" },
+    { id: 30, type: "konsep" }
 ];
+
+const essayQuestions = [
+    { text: "Jelaskan pengertian kalor dengan bahasamu sendiri!", answer: "Kalor adalah energi yang berpindah dari benda bersuhu lebih tinggi ke benda bersuhu lebih rendah karena perbedaan suhu." },
+    { text: "Jelaskan perbedaan antara suhu dan kalor!", answer: "Suhu menunjukkan derajat panas atau dingin benda, sedangkan kalor adalah energi yang berpindah akibat perbedaan suhu." },
+    { text: "Mengapa setiap jenis benda membutuhkan jumlah kalor berbeda untuk menaikkan suhunya?", answer: "Setiap zat memiliki kalor jenis berbeda. Zat dengan kalor jenis lebih besar membutuhkan kalor lebih banyak untuk kenaikan suhu yang sama." },
+    { text: "Jelaskan hubungan massa benda dengan jumlah kalor yang diperlukan!", answer: "Semakin besar massa benda, semakin banyak kalor yang dibutuhkan untuk perubahan suhu dan kalor jenis yang sama." },
+    { text: "Mengapa air membutuhkan kalor cukup besar untuk menaikkan suhunya?", answer: "Air memiliki kalor jenis relatif besar, sekitar 4.200 J/(kg·°C)." },
+    { text: "Apa yang dimaksud dengan kesetimbangan termal? Berikan contohnya!", answer: "Keadaan ketika benda yang berinteraksi mencapai suhu sama sehingga tidak ada perpindahan kalor bersih, misalnya air panas dan dingin yang dicampur." },
+    { text: "Sebutkan enam macam perubahan wujud zat!", answer: "Mencair, membeku, menguap, mengembun, menyublim, dan mengkristal atau deposisi." },
+    { text: "Jelaskan apa yang terjadi pada partikel zat ketika es mencair!", answer: "Es menyerap kalor; susunan partikelnya berubah dari relatif teratur menjadi dapat bergerak lebih bebas sebagai zat cair." },
+    { text: "Mengapa suhu es tetap ketika sedang mencair meskipun terus diberi kalor?", answer: "Kalor digunakan untuk mengubah wujud es menjadi air, bukan menaikkan suhu, sampai seluruh es mencair." },
+    { text: "Jelaskan perbedaan antara menguap dan mendidih!", answer: "Menguap terjadi di permukaan zat cair dan dapat berlangsung pada berbagai suhu. Mendidih terjadi di seluruh bagian zat cair pada suhu didih tertentu." },
+    { text: "Mengapa pakaian yang dijemur di bawah sinar Matahari dapat menjadi kering?", answer: "Air pada pakaian menyerap energi dari lingkungan lalu menguap." },
+    { text: "Jelaskan proses terbentuknya titik air di luar gelas berisi es!", answer: "Uap air di udara menyentuh permukaan gelas yang dingin, melepaskan energi, lalu mengembun. Air berasal dari udara." },
+    { text: "Mengapa kapur barus lama-kelamaan habis meskipun tidak terlihat mencair?", answer: "Kapur barus menyublim, yaitu berubah langsung dari padat menjadi gas." },
+    { text: "Apa yang dimaksud dengan kalor laten?", answer: "Kalor yang diserap atau dilepaskan untuk mengubah wujud zat tanpa mengubah suhunya." },
+    { text: "Jelaskan perbedaan konduksi, konveksi, dan radiasi!", answer: "Konduksi tidak memindahkan zat secara keseluruhan; konveksi disertai perpindahan zat; radiasi merambat sebagai gelombang elektromagnetik tanpa medium." },
+    { text: "Mengapa sendok logam yang dicelupkan ke air panas lama-kelamaan menjadi panas?", answer: "Kalor merambat dari ujung yang terkena air ke bagian sendok lainnya melalui konduksi." },
+    { text: "Mengapa air yang dipanaskan dapat bergerak naik dan turun?", answer: "Air panas memuai dan massa jenisnya berkurang sehingga naik, sementara air lebih dingin turun; terbentuk arus konveksi." },
+    { text: "Bagaimana panas Matahari sampai ke Bumi meskipun ruang angkasa hampir tidak memiliki udara?", answer: "Panas Matahari merambat melalui radiasi, yaitu gelombang elektromagnetik yang tidak memerlukan medium." },
+    { text: "Jelaskan peran konveksi dalam terjadinya angin darat dan angin laut!", answer: "Perbedaan pemanasan darat dan laut menimbulkan perbedaan suhu dan tekanan udara yang membentuk sirkulasi: siang hari angin laut menuju darat, malam hari angin darat menuju laut." },
+    { text: "Mengapa logam digunakan sebagai bahan utama bagian bawah panci?", answer: "Logam adalah konduktor yang baik sehingga kalor dari kompor berpindah efektif ke makanan atau air." },
+    { text: "Mengapa pegangan panci biasanya dibuat dari plastik atau kayu?", answer: "Plastik dan kayu merupakan penghantar kalor yang buruk sehingga memperlambat perpindahan kalor ke tangan." },
+    { text: "Jelaskan cara kerja termos dalam mengurangi perpindahan kalor!", answer: "Ruang hampa menghambat konduksi dan konveksi, permukaan reflektif mengurangi radiasi, dan penutup rapat mengurangi pertukaran udara." },
+    { text: "Mengapa pakaian putih lebih nyaman digunakan pada siang hari yang panas?", answer: "Pakaian putih cenderung memantulkan lebih banyak radiasi Matahari sehingga menyerap lebih sedikit energi." },
+    { text: "Mengapa dua benda yang menerima kalor sama dapat mengalami kenaikan suhu berbeda?", answer: "Massa atau kalor jenisnya dapat berbeda. Benda dengan hasil kali massa dan kalor jenis lebih kecil mengalami kenaikan suhu lebih besar." },
+    { text: "Apa yang terjadi pada kalor dan suhu air panas serta air dingin hingga mencapai keseimbangan termal?", answer: "Kalor berpindah dari air panas ke air dingin; suhu air panas turun dan air dingin naik sampai sama. Dalam wadah terisolasi, kalor yang dilepas sama dengan yang diterima." },
+    { text: "Apakah benda bersuhu tinggi pasti memiliki kalor lebih banyak? Jelaskan!", answer: "Tidak. Suhu bukan jumlah kalor; energi termal juga dipengaruhi massa dan jenis zat." }
+];
+
+const multipleChoiceQuestions = [
+    { text: "Kalor berpindah dari benda yang ....", options: ["Bersuhu rendah ke bersuhu tinggi", "Bersuhu tinggi ke bersuhu rendah", "Bermassa besar ke bermassa kecil", "Berukuran besar ke berukuran kecil"], answer: 1 },
+    { text: "Satuan SI untuk kalor adalah ....", options: ["Celsius", "Kelvin", "Joule", "Watt"], answer: 2 },
+    { text: "Alat untuk mengukur suhu suatu benda adalah ....", options: ["Kalorimeter", "Termometer", "Barometer", "Higrometer"], answer: 1 },
+    { text: "Kalor dapat berpindah karena adanya perbedaan ....", options: ["Massa", "Volume", "Suhu", "Warna"], answer: 2 },
+    { text: "Kesetimbangan termal terjadi ketika dua benda memiliki ....", options: ["Massa sama", "Volume sama", "Suhu sama", "Bentuk sama"], answer: 2 },
+    { text: "Hubungan yang benar antara kalori dan joule adalah ....", options: ["1 kalori ≈ 4,2 joule", "1 kalori = 42 joule", "1 kalori = 0,42 joule", "1 kalori = 420 joule"], answer: 0 },
+    { text: "Banyaknya kalor untuk menaikkan suhu benda dipengaruhi oleh ....", options: ["Massa, kalor jenis, dan perubahan suhu", "Warna dan bentuk saja", "Volume saja", "Tekanan udara saja"], answer: 0 },
+    { text: "Rumus kalor untuk perubahan suhu adalah ....", options: ["Q = cΔT", "Q = mcΔT", "Q = m + c + ΔT", "Q = ΔT"], answer: 1 },
+    { text: "Dalam rumus Q = mcΔT, simbol c menyatakan ....", options: ["Suhu akhir", "Kalor jenis", "Massa", "Kalor"], answer: 1 },
+    { text: "Satuan kalor jenis dalam SI adalah ....", options: ["J/kg", "J/(kg·°C)", "J·°C/kg", "kg/J·°C"], answer: 1 },
+    { text: "Bahan pegangan panci yang penghantaran kalornya rendah adalah ....", options: ["Besi", "Tembaga", "Aluminium", "Kayu"], answer: 3 },
+    { text: "Benda bermassa 2 kg, kalor jenis 500 J/(kg·°C), naik suhu 10°C. Kalor yang diterima adalah ....", options: ["1.000 J", "5.000 J", "10.000 J", "20.000 J"], answer: 2 },
+    { text: "Air 1 kg dipanaskan dari 25°C ke 35°C (c = 4.200 J/(kg·°C)). Kalor yang diperlukan adalah ....", options: ["4.200 J", "21.000 J", "42.000 J", "84.000 J"], answer: 2 },
+    { text: "Benda bermassa 500 gram menerima 10.000 J. Jika c = 500 J/(kg·°C), perubahan suhunya adalah ....", options: ["10°C", "20°C", "30°C", "40°C"], answer: 1 },
+    { text: "Air 2 kg naik suhu 5°C dengan c = 4.200 J/(kg·°C). Kalor yang diterima adalah ....", options: ["4.200 J", "8.400 J", "21.000 J", "42.000 J"], answer: 3 },
+    { text: "Perubahan wujud dari padat menjadi cair disebut ....", options: ["Membeku", "Menguap", "Mencair", "Mengembun"], answer: 2 },
+    { text: "Perubahan wujud dari cair menjadi gas disebut ....", options: ["Mengembun", "Membeku", "Menguap", "Menyublim"], answer: 2 },
+    { text: "Kapur barus yang semakin lama semakin habis mengalami ....", options: ["Membeku", "Mencair", "Menyublim", "Mengembun"], answer: 2 },
+    { text: "Kalor yang mengubah wujud zat tanpa mengubah suhunya disebut ....", options: ["Kalor jenis", "Kalor laten", "Kalor mekanik", "Kalor listrik"], answer: 1 },
+    { text: "Rumus kalor untuk perubahan wujud adalah ....", options: ["Q = mcΔT", "Q = mL", "Q = cΔT", "Q = m/c"], answer: 1 },
+    { text: "Perpindahan kalor tanpa perpindahan zat secara keseluruhan disebut ....", options: ["Konveksi", "Konduksi", "Radiasi", "Evaporasi"], answer: 1 },
+    { text: "Perpindahan kalor yang disertai perpindahan zat disebut ....", options: ["Konduksi", "Konveksi", "Radiasi", "Sublimasi"], answer: 1 },
+    { text: "Perpindahan kalor yang tidak memerlukan medium adalah ....", options: ["Konduksi", "Konveksi", "Radiasi", "Kondensasi"], answer: 2 },
+    { text: "Contoh perpindahan kalor secara konduksi adalah ....", options: ["Panas Matahari sampai ke Bumi", "Air bergerak saat dipanaskan", "Sendok logam menjadi panas di air panas", "Angin laut"], answer: 2 },
+    { text: "Contoh perpindahan kalor secara konveksi adalah ....", options: ["Panas Matahari sampai ke Bumi", "Gagang panci menjadi panas", "Air bergerak naik turun saat dipanaskan", "Panas api terasa dari kejauhan"], answer: 2 },
+    { text: "Contoh bahan konduktor yang baik adalah ....", options: ["Kayu", "Plastik", "Tembaga", "Karet"], answer: 2 },
+    { text: "Contoh bahan isolator panas adalah ....", options: ["Aluminium", "Tembaga", "Besi", "Kayu"], answer: 3 },
+    { text: "Termos dapat mempertahankan suhu minuman karena ....", options: ["Mempercepat perpindahan kalor", "Mengurangi perpindahan kalor", "Menghasilkan kalor sendiri", "Menghilangkan massa minuman"], answer: 1 },
+    { text: "Pakaian hitam pada siang hari cenderung lebih panas karena ....", options: ["Lebih banyak menyerap radiasi", "Tidak menyerap kalor", "Memantulkan seluruh radiasi", "Menghasilkan kalor sendiri"], answer: 0 },
+    { text: "Air panas dicampur air dingin dalam wadah terisolasi. Suhu akhirnya ....", options: ["Sama dengan suhu air panas", "Sama dengan suhu air dingin", "Di antara suhu air panas dan dingin", "Selalu 0°C"], answer: 2 },
+    { text: "Sebuah benda melepaskan kalor ke lingkungan. Suhunya dapat ....", options: ["Selalu naik", "Turun", "Selalu tetap", "Tidak mungkin berubah"], answer: 1 },
+    { text: "Air 1 kg menerima 4.200 J (c = 4.200 J/(kg·°C)). Kenaikan suhunya adalah ....", options: ["0,5°C", "1°C", "2°C", "10°C"], answer: 1 },
+    { text: "Benda membutuhkan 12.000 J untuk naik suhu 10°C. Jika massanya 2 kg, kalor jenisnya adalah ....", options: ["300 J/(kg·°C)", "400 J/(kg·°C)", "500 J/(kg·°C)", "600 J/(kg·°C)"], answer: 3 },
+    { text: "Pernyataan paling tepat tentang kalor adalah ....", options: ["Ukuran langsung suhu benda", "Hanya dimiliki benda panas", "Energi yang berpindah akibat perbedaan suhu", "Selalu menyebabkan perubahan wujud"], answer: 2 },
+    { text: "Kalor jenis menunjukkan kalor yang diperlukan untuk ....", options: ["Menaikkan suhu 1 kg zat sebesar 1°C", "Menaikkan massa zat sebesar 1 kg", "Mengubah zat menjadi gas", "Menurunkan suhu sampai 0°C"], answer: 0 },
+    { text: "Jika perubahan suhu diperbesar dua kali dengan massa dan kalor jenis tetap, kalor yang diperlukan ....", options: ["Menjadi setengah", "Tetap", "Menjadi dua kali", "Menjadi empat kali"], answer: 2 },
+    { text: "Jika massa zat yang mengalami perubahan wujud diperbesar dua kali, kalor yang diperlukan menjadi ....", options: ["Setengah", "Tetap", "Dua kali", "Empat kali"], answer: 2 },
+    { text: "Contoh peristiwa mengembun adalah ....", options: ["Es mencair", "Air mendidih", "Titik air terbentuk di luar gelas berisi es", "Kapur barus mengecil"], answer: 2 },
+    { text: "Saat es mencair pada tekanan tetap, suhu campuran secara ideal ....", options: ["Terus meningkat", "Terus menurun", "Tetap sampai seluruh es mencair", "Selalu 100°C"], answer: 2 },
+    { text: "Bahan yang mudah menghantarkan kalor disebut ....", options: ["Isolator", "Konduktor", "Radiator", "Evaporator"], answer: 1 },
+    { text: "Pegangan panci dibuat dari bahan isolator agar ....", options: ["Panci cepat dingin", "Tangan tidak mudah menerima kalor dari panci", "Panci menjadi lebih berat", "Air cepat mendidih"], answer: 1 },
+    { text: "Panas Matahari sampai ke Bumi terutama melalui ....", options: ["Radiasi", "Konduksi", "Konveksi", "Sublimasi"], answer: 0 },
+    { text: "Ketika sendok logam dimasukkan ke teh panas, gagangnya ikut panas karena ....", options: ["Konduksi", "Konveksi", "Radiasi", "Evaporasi"], answer: 0 },
+    { text: "Aluminium dapat menghantarkan kalor dengan baik karena merupakan ....", options: ["Isolator panas", "Konduktor panas", "Penyerap suara", "Isolator listrik sempurna"], answer: 1 },
+    { text: "Es batu lebih cepat mencair di tempat panas karena ....", options: ["Es menghasilkan kalor sendiri", "Es menerima kalor dari lingkungan", "Es kehilangan kalor ke lingkungan", "Suhunya naik tanpa menerima kalor"], answer: 1 },
+    { text: "Dua benda berbeda suhu dalam wadah terisolasi pada akhirnya akan ....", options: ["Memiliki massa sama", "Memiliki suhu sama", "Memiliki volume sama", "Menjadi gas"], answer: 1 },
+    { text: "Dalam rumus Q = mcΔT, simbol m menyatakan ....", options: ["Massa benda", "Kalor jenis", "Perubahan suhu", "Kalor"], answer: 0 },
+    { text: "Ketika air dipanaskan, suhu air pada umumnya akan ....", options: ["Turun", "Naik", "Tetap sejak awal", "Menjadi nol"], answer: 1 },
+    { text: "Jika massa benda menjadi dua kali dan nilai lain tetap, kalor yang diperlukan menjadi ....", options: ["Setengah", "Tetap", "Dua kali lipat", "Empat kali lipat"], answer: 2 },
+    { text: "Saat air mendidih, energi kalor digunakan untuk ....", options: ["Menghilangkan massa air", "Mengubah air menjadi uap", "Menurunkan suhu air", "Membuat air menjadi padat"], answer: 1 },
+    { text: "Gagang setrika dibuat dari plastik agar ....", options: ["Setrika lebih berat", "Kalor tidak mudah merambat ke tangan", "Setrika cepat panas", "Listrik lebih banyak mengalir"], answer: 1 },
+    { text: "Saat tangan didekatkan ke api unggun, tangan terasa panas terutama karena ....", options: ["Radiasi", "Konduksi", "Pembekuan", "Penyubliman"], answer: 0 }
+];
+
+let essayIndex = 0;
+let multipleChoiceIndex = 0;
+questions.forEach(question => {
+    if (question.type === "start" || question.type === "corner") return;
+    question.items = [
+        { type: "Esai", ...essayQuestions[essayIndex++] },
+        ...multipleChoiceQuestions.slice(multipleChoiceIndex, multipleChoiceIndex + 2).map(item => ({
+            type: "Pilihan Ganda",
+            ...item
+        }))
+    ];
+    multipleChoiceIndex += 2;
+});
 
 const HOUSE_COMPONENTS = ["foundation", "wall-left", "wall-right", "door", "window-left", "window-right", "roof"];
 const COLORS = ["#2563eb", "#16a34a", "#ca8a04", "#dc2626", "#9333ea", "#ea580c", "#db2777", "#0891b2"];
@@ -39,6 +137,8 @@ const AVATARS = ["🧑‍🚀", "👩‍🔬", "🧑‍🔧", "🦸", "🧑‍�
 let groups = [];
 let currentTurn = 0;
 let isRolling = false;
+let activeChallenge = null;
+const questionDraws = new Map();
 
 // DOM Elements
 const setupScreen = document.getElementById('setup-screen');
@@ -72,6 +172,8 @@ const btnSuccess = document.getElementById('btn-success');
 
 // Setup Logic (group count is chosen with the 2/3/4 buttons -> #group-count)
 btnStartGame.onclick = () => {
+    startBackgroundMusic();
+    playSoundEffect("start");
     const numGroups = parseInt(groupCountEl.innerText, 10) || 2;
 
     // Init Groups
@@ -99,14 +201,97 @@ btnStartGame.onclick = () => {
 
 // How-to-play dialog
 const modalHelp = document.getElementById('modal-help');
-document.getElementById('btn-help').onclick = () => modalHelp.classList.remove('hidden');
-document.getElementById('btn-help-close').onclick = () => modalHelp.classList.add('hidden');
-
-// Sound button (icon toggle only)
-const btnSound = document.getElementById('btn-sound');
-btnSound.onclick = () => {
-    btnSound.innerText = btnSound.innerText.trim() === '🔊' ? '🔇' : '🔊';
+document.getElementById('btn-help').onclick = () => {
+    playSoundEffect("help");
+    modalHelp.classList.remove('hidden');
 };
+document.getElementById('btn-help-close').onclick = () => {
+    playSoundEffect("help");
+    modalHelp.classList.add('hidden');
+};
+
+// Sound controls
+const btnSound = document.getElementById('btn-sound');
+const backgroundMusic = new Audio("assets/audio/background.mp3");
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.35;
+backgroundMusic.preload = "none";
+
+let soundEnabled = true;
+let audioContext;
+
+function startBackgroundMusic() {
+    if (!soundEnabled || !backgroundMusic.paused) return;
+    backgroundMusic.play().catch(() => {});
+}
+
+function playSoundEffect(name) {
+    if (!soundEnabled) return;
+
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    audioContext ??= new AudioContextClass();
+    if (audioContext.state === "suspended") audioContext.resume().catch(() => {});
+
+    const notesByEffect = {
+        start: [523.25, 659.25],
+        select: [698.46],
+        help: [587.33, 698.46],
+        dice: [392, 587, 440, 659],
+        roll: [783.99, 1046.5],
+        step: [480],
+        land: [440, 554.37],
+        question: [587.33, 783.99],
+        reveal: [659.25, 783.99],
+        correct: [523.25, 659.25, 783.99],
+        component: [659.25, 783.99, 1046.5],
+        turn: [659.25],
+        wrong: [392, 293.66],
+        win: [523.25, 659.25, 783.99, 1046.5, 1318.51]
+    };
+    const notes = notesByEffect[name];
+    if (!notes) return;
+
+    const now = audioContext.currentTime;
+    notes.forEach((frequency, index) => {
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        const startAt = now + index * (name === "dice" ? 0.055 : 0.11);
+        const duration = name === "step" ? 0.075 : 0.18;
+
+        oscillator.type = name === "step" ? "triangle" : "sine";
+        oscillator.frequency.setValueAtTime(frequency, startAt);
+        gain.gain.setValueAtTime(0.0001, startAt);
+        gain.gain.exponentialRampToValueAtTime(name === "step" ? 0.055 : 0.1, startAt + 0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startAt + duration);
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+        oscillator.start(startAt);
+        oscillator.stop(startAt + duration + 0.02);
+    });
+}
+
+function updateSoundButton() {
+    btnSound.innerText = soundEnabled ? "🔊" : "🔇";
+    btnSound.title = soundEnabled ? "Matikan suara" : "Nyalakan suara";
+    btnSound.setAttribute("aria-label", btnSound.title);
+    btnSound.setAttribute("aria-pressed", String(soundEnabled));
+}
+
+btnSound.onclick = () => {
+    soundEnabled = !soundEnabled;
+    if (soundEnabled) {
+        startBackgroundMusic();
+    } else {
+        backgroundMusic.pause();
+    }
+    updateSoundButton();
+};
+updateSoundButton();
+document.querySelectorAll('.group-select-btn').forEach(button => {
+    button.addEventListener('click', () => playSoundEffect("select"));
+});
 
 // Track layout (same 30 tiles, same order): starts bottom-left and goes UP the left column,
 // then across the top row (left->right), down the right column, and back along the bottom row.
@@ -306,6 +491,7 @@ function renderDice(n) {
 btnRoll.onclick = () => {
     if (isRolling) return;
     isRolling = true;
+    playSoundEffect("dice");
     
     let rollCount = 0;
     diceVisual.classList.add('dice-rolling');
@@ -320,6 +506,7 @@ btnRoll.onclick = () => {
             
             const finalRoll = Math.floor(Math.random() * 6) + 1;
             renderDice(finalRoll);
+            playSoundEffect("roll");
             
             setTimeout(() => {
                 moveCurrentPawn(finalRoll);
@@ -330,20 +517,56 @@ btnRoll.onclick = () => {
 
 function moveCurrentPawn(steps) {
     const group = groups[currentTurn];
-    group.pos += steps;
-    if (group.pos > 30) group.pos -= 30; // wrap around
-    
-    renderPawns(); // Animated smoothly via CSS transition
-    
-    // Check challenge
-    setTimeout(() => {
-        const question = questions.find(q => q.id === group.pos);
-        if (question && question.type !== "start" && question.type !== "corner") {
-            triggerChallenge(question);
-        } else {
-            nextTurn();
+    let movedSteps = 0;
+
+    const moveOneStep = () => {
+        group.pos = group.pos === 30 ? 1 : group.pos + 1;
+        movedSteps++;
+        playSoundEffect("step");
+        if (movedSteps === steps) playSoundEffect("land");
+        renderPawns();
+
+        if (movedSteps < steps) {
+            setTimeout(moveOneStep, 550);
+            return;
         }
-    }, 600);
+
+        setTimeout(() => {
+            const question = questions.find(q => q.id === group.pos);
+            if (question && question.type !== "start" && question.type !== "corner") {
+                triggerChallenge(question);
+            } else {
+                nextTurn();
+            }
+        }, 550);
+    };
+
+    moveOneStep();
+}
+
+function drawQuestionForTile(question) {
+    let draw = questionDraws.get(question.id);
+    if (!draw) {
+        draw = { usedIndexes: [], lastIndex: null };
+    }
+
+    if (draw.usedIndexes.length === question.items.length) {
+        draw.usedIndexes = [];
+    }
+
+    let availableIndexes = question.items
+        .map((_, index) => index)
+        .filter(index => !draw.usedIndexes.includes(index));
+
+    if (draw.usedIndexes.length === 0 && draw.lastIndex !== null && availableIndexes.length > 1) {
+        availableIndexes = availableIndexes.filter(index => index !== draw.lastIndex);
+    }
+
+    const selectedIndex = availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
+    draw.usedIndexes.push(selectedIndex);
+    draw.lastIndex = selectedIndex;
+    questionDraws.set(question.id, draw);
+    return question.items[selectedIndex];
 }
 
 function triggerChallenge(question) {
@@ -352,9 +575,11 @@ function triggerChallenge(question) {
     
     // Setup modal
     const meta = TYPE_META[question.type];
-    modalType.innerHTML = `<span>${meta.icon}</span> KARTU ${meta.label.toUpperCase()}`;
-    modalQuestion.innerText = question.text;
-    modalAnswer.innerText = question.answer;
+    activeChallenge = drawQuestionForTile(question);
+    playSoundEffect("question");
+    modalType.innerHTML = `<span>${meta.icon}</span> KARTU ${meta.label.toUpperCase()} · ${activeChallenge.type.toUpperCase()}`;
+    renderChallengeItems([activeChallenge], modalQuestion);
+    modalAnswer.replaceChildren();
     
     // Reset state
     btnShowAnswer.classList.remove('hidden');
@@ -371,8 +596,52 @@ function triggerChallenge(question) {
     modalInner.classList.add('modal-content-show');
 }
 
+function renderChallengeItems(items, container, showAnswers = false) {
+    const optionLabels = ["A", "B", "C", "D"];
+    container.replaceChildren();
+
+    items.forEach((item, index) => {
+        const card = document.createElement("section");
+        card.className = "rounded-xl border-2 border-[#00164e]/20 bg-white p-3";
+
+        const heading = document.createElement("div");
+        heading.className = "text-xs font-bold uppercase tracking-wide text-[#0b57c9] mb-1";
+        heading.textContent = item.type;
+        card.appendChild(heading);
+
+        if (showAnswers) {
+            const answer = document.createElement("p");
+            answer.className = "font-semibold text-[#15803d]";
+            answer.textContent = item.options
+                ? `Jawaban: ${optionLabels[item.answer]}. ${item.options[item.answer]}`
+                : `Contoh jawaban: ${item.answer}`;
+            card.appendChild(answer);
+        } else {
+            const prompt = document.createElement("p");
+            prompt.className = "font-semibold text-[#00164e] leading-snug";
+            prompt.textContent = item.text;
+            card.appendChild(prompt);
+
+            if (item.options) {
+                const options = document.createElement("ol");
+                options.className = "mt-2 space-y-1 text-sm text-[#334155]";
+                item.options.forEach((option, optionIndex) => {
+                    const optionItem = document.createElement("li");
+                    optionItem.textContent = `${optionLabels[optionIndex]}. ${option}`;
+                    options.appendChild(optionItem);
+                });
+                card.appendChild(options);
+            }
+        }
+
+        container.appendChild(card);
+    });
+}
+
 btnShowAnswer.onclick = () => {
+    playSoundEffect("reveal");
     btnShowAnswer.classList.add('hidden');
+    renderChallengeItems([activeChallenge], modalAnswer, true);
     answerArea.classList.remove('hidden');
 };
 
@@ -385,11 +654,13 @@ function closeChallenge() {
 }
 
 btnFail.onclick = () => {
+    playSoundEffect("wrong");
     closeChallenge();
     nextTurn();
 };
 
 btnSuccess.onclick = () => {
+    playSoundEffect("correct");
     closeChallenge();
     rewardComponent();
 };
@@ -407,6 +678,7 @@ function rewardComponent() {
         if(badge) {
             badge.classList.add('earned');
         }
+        setTimeout(() => playSoundEffect("component"), 350);
         const plot = document.getElementById(`plot-${group.id}`);
         if (plot) plot.style.setProperty('--p', group.components.length);
         
@@ -422,6 +694,7 @@ function rewardComponent() {
 
 function nextTurn() {
     currentTurn = (currentTurn + 1) % groups.length;
+    setTimeout(() => playSoundEffect("turn"), 450);
     isRolling = false;
     renderDice(3);
     updateHUD();
@@ -429,6 +702,7 @@ function nextTurn() {
 
 // Win Confetti
 function showWinner(group) {
+    playSoundEffect("win");
     const winnerModal = document.getElementById('modal-winner');
     document.getElementById('winner-name').innerText = `${group.name} Menang!`;
     winnerModal.classList.remove('hidden');
