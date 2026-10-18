@@ -19,7 +19,7 @@
     --blue-dark: #0b57c9;
     --c-konsep: #a8eba5;
     --c-eksperimen: #9fdcff;
-    --c-hitungan: #ffc58a;
+    --c-hitungan: #ffe680;
     --c-kolaborasi: #ffb3ad;
     --c-corner: #d9c2ff;
     --c-start: #ffe44d;
@@ -386,7 +386,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: .2cqw;
-    background-color: #fff;
+    background-color: var(--row-color, #fff);
     transition: transform .15s;
 }
 .tile:hover { transform: translateY(1px); z-index: 10; }
@@ -428,7 +428,7 @@ body {
 .t-eksperimen { background-color: var(--c-eksperimen); }
 .t-hitungan { background-color: var(--c-hitungan); }
 .t-kolaborasi { background-color: var(--c-kolaborasi); }
-.t-corner { background-color: var(--c-corner); }
+.t-corner { background-color: var(--row-color, var(--c-corner)); }
 .t-start { background-color: var(--c-start); }
 
 /* Active Tile Pulse */
@@ -574,16 +574,16 @@ body {
 .badge {
     font-size: clamp(12px, 2.4cqw, 26px);
     line-height: 1;
-    color: var(--navy);
-    transition: color .3s;
+    opacity: .3;
+    filter: grayscale(1);
+    transition: opacity .3s, filter .3s;
 }
-.badge::before { content: '☆'; }
+.badge::before { content: attr(data-icon); }
 .badge.earned {
-    color: #f5b301;
-    text-shadow: 0 1px 0 var(--navy);
+    opacity: 1;
+    filter: none;
     animation: popIn .6s cubic-bezier(.34,1.56,.64,1);
 }
-.badge.earned::before { content: '★'; }
 @keyframes popIn {
     0% { transform: scale(0) }
     50% { transform: scale(1.5) }

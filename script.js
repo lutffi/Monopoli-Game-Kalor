@@ -1,35 +1,35 @@
 // State Management
 const questions = [
-    { id: 1, type: "start" },
+    { id: 1, type: "start", cardType: "konsep" },
     { id: 2, type: "konsep" },
-    { id: 3, type: "konsep" },
-    { id: 4, type: "eksperimen" },
-    { id: 5, type: "konsep" },
+    { id: 3, type: "eksperimen" },
+    { id: 4, type: "hitungan" },
+    { id: 5, type: "kolaborasi" },
     { id: 6, type: "konsep" },
-    { id: 7, type: "konsep" },
-    { id: 8, type: "corner" },
-    { id: 9, type: "konsep" },
-    { id: 10, type: "konsep" },
+    { id: 7, type: "eksperimen" },
+    { id: 8, type: "corner", cardType: "eksperimen" },
+    { id: 9, type: "hitungan" },
+    { id: 10, type: "kolaborasi" },
     { id: 11, type: "konsep" },
-    { id: 12, type: "konsep" },
-    { id: 13, type: "konsep" },
-    { id: 14, type: "konsep" },
-    { id: 15, type: "corner" },
+    { id: 12, type: "eksperimen" },
+    { id: 13, type: "hitungan" },
+    { id: 14, type: "kolaborasi" },
+    { id: 15, type: "corner", cardType: "hitungan" },
     { id: 16, type: "konsep" },
-    { id: 17, type: "hitungan" },
-    { id: 18, type: "konsep" },
-    { id: 19, type: "konsep" },
+    { id: 17, type: "eksperimen" },
+    { id: 18, type: "hitungan" },
+    { id: 19, type: "kolaborasi" },
     { id: 20, type: "konsep" },
-    { id: 21, type: "konsep" },
-    { id: 22, type: "corner" },
-    { id: 23, type: "kolaborasi" },
-    { id: 24, type: "konsep" },
+    { id: 21, type: "eksperimen" },
+    { id: 22, type: "corner", cardType: "kolaborasi" },
+    { id: 23, type: "hitungan" },
+    { id: 24, type: "kolaborasi" },
     { id: 25, type: "konsep" },
-    { id: 26, type: "konsep" },
+    { id: 26, type: "eksperimen" },
     { id: 27, type: "hitungan" },
-    { id: 28, type: "hitungan" },
+    { id: 28, type: "kolaborasi" },
     { id: 29, type: "konsep" },
-    { id: 30, type: "konsep" }
+    { id: 30, type: "eksperimen" }
 ];
 
 const essayQuestions = [
@@ -116,21 +116,56 @@ const multipleChoiceQuestions = [
     { text: "Saat tangan didekatkan ke api unggun, tangan terasa panas terutama karena ....", options: ["Radiasi", "Konduksi", "Pembekuan", "Penyubliman"], answer: 0 }
 ];
 
+const CARD_DECKS = {
+    eksperimen: [
+        { type: "Percobaan", text: "Bayangkan ujung sendok logam dan sendok plastik dicelupkan ke air hangat selama satu menit. Menurutmu, sendok mana yang lebih cepat terasa hangat?", answer: "Sendok logam terasa lebih cepat hangat karena logam menghantarkan kalor lebih baik daripada plastik." },
+        { type: "Percobaan", text: "Bayangkan es batu diletakkan di atas piring logam dan piring plastik selama beberapa menit. Menurutmu, di piring mana es lebih cepat mencair?", answer: "Es di piring logam biasanya lebih cepat mencair karena logam menghantarkan kalor dari lingkungan ke es lebih baik." },
+        { type: "Percobaan", text: "Bayangkan kamu menyentuh bagian luar gelas berisi air hangat, lalu gelas berisi air bersuhu ruang. Apa yang terasa berbeda dan ke arah mana kalor berpindah?", answer: "Gelas berisi air hangat terasa lebih panas. Kalor berpindah dari air dan gelas yang lebih hangat menuju udara atau tangan yang lebih dingin." },
+        { type: "Percobaan", text: "Bayangkan dua gelas berisi air hangat: satu dibungkus kain dan satu dibiarkan terbuka. Setelah beberapa menit, gelas mana yang menurutmu airnya lebih lama tetap hangat?", answer: "Air pada gelas yang dibungkus biasanya lebih lama mendingin karena kain menghambat perpindahan kalor ke lingkungan." }
+    ],
+    hitungan: [
+        { type: "Soal numerik", text: "Air bermassa 1 kg dipanaskan dari 25°C menjadi 30°C. Jika kalor jenis air 4.200 J/(kg·°C), berapa kalor yang diperlukan?", answer: "Q = mcΔT = 1 × 4.200 × 5 = 21.000 J." },
+        { type: "Soal numerik", text: "Benda bermassa 2 kg menerima kalor 6.000 J. Jika kalor jenisnya 300 J/(kg·°C), berapa kenaikan suhunya?", answer: "ΔT = Q/(mc) = 6.000/(2 × 300) = 10°C." },
+        { type: "Soal numerik", text: "Air 0,5 kg naik suhu 4°C. Dengan kalor jenis 4.200 J/(kg·°C), hitung kalor yang diterima.", answer: "Q = mcΔT = 0,5 × 4.200 × 4 = 8.400 J." },
+        { type: "Soal numerik", text: "Sebanyak 10.000 J kalor menaikkan suhu benda 5°C. Jika massa benda 2 kg, berapa kalor jenisnya?", answer: "c = Q/(mΔT) = 10.000/(2 × 5) = 1.000 J/(kg·°C)." },
+        { type: "Soal numerik", text: "Benda bermassa 500 g menerima kalor 5.000 J. Jika kalor jenisnya 500 J/(kg·°C), berapa perubahan suhunya?", answer: "Massa 500 g = 0,5 kg. ΔT = Q/(mc) = 5.000/(0,5 × 500) = 20°C." }
+    ],
+    kolaborasi: [
+        { type: "Tantangan kelompok", text: "Setiap anggota kelompok bergiliran memberi satu contoh perpindahan kalor. Kelompok harus menyebutkan apakah contohnya konduksi, konveksi, atau radiasi.", answer: "Contoh dapat mencakup sendok logam menjadi panas (konduksi), air bergerak saat dipanaskan (konveksi), dan panas Matahari sampai ke Bumi (radiasi). Setiap anggota menyumbang satu contoh." },
+        { type: "Tantangan kelompok", text: "Buat urutan penjelasan bersama: bagaimana kalor dari kompor berpindah hingga air di dalam panci menjadi panas? Setiap anggota menambahkan satu tahap.", answer: "Kalor dari api memanaskan panci, kalor merambat melalui logam panci, lalu berpindah ke air. Arus konveksi menyebarkan kalor di dalam air." },
+        { type: "Tantangan kelompok", text: "Rancang cara menjaga minuman tetap hangat menggunakan benda yang tersedia di kelas. Setiap anggota mengusulkan satu bahan atau langkah dan alasannya.", answer: "Gunakan bahan isolator seperti kain untuk membungkus wadah dan tutup wadah agar perpindahan kalor berkurang. Setiap anggota perlu memberi usulan beserta alasan." },
+        { type: "Tantangan kelompok", text: "Diskusikan mengapa pegangan panci dibuat dari bahan berbeda dengan badan pancinya. Semua anggota harus memberi satu alasan atau contoh.", answer: "Badan panci memakai konduktor agar kalor mudah sampai ke makanan, sedangkan pegangan memakai isolator seperti kayu atau plastik agar tangan terlindung." }
+    ]
+};
+
 let essayIndex = 0;
 let multipleChoiceIndex = 0;
 questions.forEach(question => {
-    if (question.type === "start" || question.type === "corner") return;
-    question.items = [
-        { type: "Esai", ...essayQuestions[essayIndex++] },
-        ...multipleChoiceQuestions.slice(multipleChoiceIndex, multipleChoiceIndex + 2).map(item => ({
-            type: "Pilihan Ganda",
-            ...item
-        }))
-    ];
-    multipleChoiceIndex += 2;
+    const cardType = question.cardType || question.type;
+    if (cardType === "konsep") {
+        question.items = [
+            { type: "Esai", ...essayQuestions[essayIndex++] },
+            ...multipleChoiceQuestions.slice(multipleChoiceIndex, multipleChoiceIndex + 2).map(item => ({
+                type: "Pilihan Ganda",
+                ...item
+            }))
+        ];
+        multipleChoiceIndex += 2;
+        return;
+    }
+    question.items = CARD_DECKS[cardType];
 });
 
 const HOUSE_COMPONENTS = ["foundation", "wall-left", "wall-right", "door", "window-left", "window-right", "roof"];
+const HOUSE_COMPONENT_ICONS = {
+    foundation: "🧱",
+    "wall-left": "🧱",
+    "wall-right": "🧱",
+    door: "🚪",
+    "window-left": "🪟",
+    "window-right": "🪟",
+    roof: "🔺"
+};
 const COLORS = ["#2563eb", "#16a34a", "#ca8a04", "#dc2626", "#9333ea", "#ea580c", "#db2777", "#0891b2"];
 const AVATARS = ["🧑‍🚀", "👩‍🔬", "🧑‍🔧", "🦸", "🧑‍🚒", "🧑‍🍳", "🥷", "🧙"];
 
@@ -307,7 +342,7 @@ function getGridArea(id) {
 const TYPE_META = {
     konsep:     { label: 'Konsep',     icon: '💡', color: '#a8eba5' },
     eksperimen: { label: 'Eksperimen', icon: '🧪', color: '#9fdcff' },
-    hitungan:   { label: 'Hitungan',   icon: '🧮', color: '#ffc58a' },
+    hitungan:   { label: 'Hitungan',   icon: '🧮', color: '#ffe680' },
     kolaborasi: { label: 'Kolaborasi', icon: '🤝', color: '#ffb3ad' }
 };
 const CORNER_META = {
@@ -316,6 +351,7 @@ const CORNER_META = {
     15: { label: 'Pengamatan', icon: '🔍' },
     22: { label: 'Zona Aman',  icon: '🛡️' }
 };
+const ROW_COLORS = ['#f8d7b8', '#e8dcf8', '#d5edfa', '#f8e1bd', '#dff0c9', '#f7d5df', '#d6eee7'];
 
 function getTileVisual(q) {
     if (q.type === 'start') return { cls: 't-start', ...CORNER_META[q.id] };
@@ -333,7 +369,9 @@ function generateBoard() {
         const v = getTileVisual(q);
         const tile = document.createElement('div');
         tile.className = `tile ${v.cls}`;
-        tile.style.gridArea = getGridArea(q.id);
+        const gridArea = getGridArea(q.id);
+        tile.style.gridArea = gridArea;
+        tile.style.setProperty('--row-color', ROW_COLORS[Number.parseInt(gridArea, 10) - 1]);
         tile.id = `tile-${q.id}`;
         tile.innerHTML = `
             <span class="tile-number">${q.id}</span>
@@ -354,7 +392,7 @@ function generateBoard() {
         plot.innerHTML = `
             <div class="plot-label"><span class="plot-avatar" style="--pc:${g.color}">${AVATARS[g.id % AVATARS.length]}</span>${g.name}</div>
             <div class="badges-container" id="badges-${g.id}">
-                ${HOUSE_COMPONENTS.map(c => `<div class="badge" id="badge-${g.id}-${c}"></div>`).join('')}
+                ${HOUSE_COMPONENTS.map(c => `<div class="badge" id="badge-${g.id}-${c}" data-icon="${HOUSE_COMPONENT_ICONS[c]}" title="${c.replaceAll('-', ' ')}" aria-label="${c.replaceAll('-', ' ')}"></div>`).join('')}
             </div>
         `;
         centerArea.appendChild(plot);
@@ -533,7 +571,7 @@ function moveCurrentPawn(steps) {
 
         setTimeout(() => {
             const question = questions.find(q => q.id === group.pos);
-            if (question && question.type !== "start" && question.type !== "corner") {
+            if (question) {
                 triggerChallenge(question);
             } else {
                 nextTurn();
@@ -574,7 +612,8 @@ function triggerChallenge(question) {
     document.getElementById(`tile-${question.id}`).classList.add('active');
     
     // Setup modal
-    const meta = TYPE_META[question.type];
+    const cardType = question.cardType || question.type;
+    const meta = TYPE_META[cardType];
     activeChallenge = drawQuestionForTile(question);
     playSoundEffect("question");
     modalType.innerHTML = `<span>${meta.icon}</span> KARTU ${meta.label.toUpperCase()} · ${activeChallenge.type.toUpperCase()}`;
